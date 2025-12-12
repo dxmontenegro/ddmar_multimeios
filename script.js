@@ -1,7 +1,4 @@
-// ------------------------------------------------------------------
-// ARQUIVO: script.js
-// LOCALIZAR E CORRIGIR OS TRECHOS ABAIXO:
-// ------------------------------------------------------------------
+
 
 document.addEventListener('DOMContentLoaded', () => {
     // ... (restante da lógica de login) ...
@@ -53,3 +50,4 @@ if (cadastroForm) {
         });
     }
 });
+
