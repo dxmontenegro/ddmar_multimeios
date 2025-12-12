@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta de Acervo - EEMTI DRAGÃO DO MAR</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <style>
+        .form-container {
+            width: 95%;
+            max-width: 1100px;
+            margin: 50px auto;
+            background-color: var(--cor-card);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: var(--sombra-elegante);
+        }
+        .consulta-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        #tabelaAcervo {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.9em;
+        }
+        #tabelaAcervo th, #tabelaAcervo td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        #tabelaAcervo th {
+            background-color: var(--cor-principal);
+            color: white;
+            cursor: pointer;
+        }
+        #mensagemConsulta {
+            text-align: center;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-info">
+            <h1>Consulta e Busca no Acervo</h1>
+        </div>
+        <button class="btn-secundario" onclick="window.location.href='painel_principal.html'">Voltar ao Painel</button>
+    </header>
+
+    <div class="form-container">
+        
+        <div class="consulta-header">
+            <input type="text" id="campoBusca" placeholder="Buscar por Título, Autor ou Tipo de Obra..." style="width: 70%; padding: 10px;">
+            <span id="contadorRegistros"></span>
+        </div>
+
+        <p id="mensagemConsulta" class="mensagem-erro">Carregando dados...</p>
+        
+        <div style="overflow-x: auto;">
+            <table id="tabelaAcervo">
+                <thead>
+                    <tr>
+                        </tr>
+                </thead>
+                <tbody>
+                    </tbody>
+            </table>
+        </div>
+        
+    </div>
+    
+    <footer>
+        <p>Desenvolvido por D.S.Montenegro - EEMTI DRAGÃO DO MAR</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
