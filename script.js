@@ -1,5 +1,5 @@
 
-const URL_DO_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbyYC8PqHDtU7NkzUztIB9SptBCbA0lgbWnyscp4C2r1F4CW5Ny6MB35SZCTuhCblI4bgg/exec'; 
+const URL_DO_APPS_SCRIPT = 'INSIRA_AQUI_O_SEU_URL_DE_APPS_SCRIPT_FINAL'; 
 // ******************************************************************
 
 // Variável global para armazenar os dados do Acervo para buscas rápidas
@@ -380,6 +380,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
 
 
 
