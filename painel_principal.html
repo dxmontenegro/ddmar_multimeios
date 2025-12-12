@@ -1,0 +1,53 @@
+// ------------------------------------------------------------------
+// ARQUIVO: painel_principal.html
+// SALVAR COMO: painel_principal.html
+// ------------------------------------------------------------------
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Principal - EEMTI DRAGÃO DO MAR</title>
+    <link rel="stylesheet" href="styles.css"> 
+</head>
+<body>
+    <header class="main-header">
+        <img src="logo_dragao_do_mar.png" alt="Logo EEMTI Dragão do Mar" class="logo">
+        <div class="header-info">
+            <h1>Sistema Multimeios - EEMTI DRAGÃO DO MAR</h1>
+            <p>Bem-vindo(a), <span id="userNameDisplay">Carregando...</span>! Nível: <span id="userNivelDisplay">...</span></p>
+        </div>
+        <button id="logoutBtn" class="btn-secundario">Sair</button>
+    </header>
+
+    <div class="container painel-grid">
+        
+        <div class="card" id="cardAcervo">
+            <h2>📚 Acervo</h2>
+            <p>Gerencie o catálogo de obras e a localização física.</p>
+            <a href="cadastro_acervo.html" class="btn-principal">Cadastrar Nova Obra</a>
+            <a href="consulta_acervo.html" class="btn-principal btn-pequeno">Consultar Acervo</a>
+        </div>
+        
+        <div class="card" id="cardEmprestimos">
+            <h2>🔄 Empréstimos</h2>
+            <p>Registro de novas transações e devoluções.</p>
+            <a href="registro_emprestimo.html" class="btn-principal">Registrar Empréstimo</a>
+            <a href="registro_devolucao.html" class="btn-principal btn-pequeno">Registrar Devolução</a>
+        </div>
+
+        <div class="card" id="cardMapas">
+            <h2>🗺️ Mapas do Dia</h2>
+            <p>Visualize as devoluções previstas e os empréstimos realizados.</p>
+            <a href="mapa_devolucoes.html" class="btn-principal">Ver Devoluções de Hoje</a>
+            <a href="mapa_emprestimos.html" class="btn-principal btn-pequeno">Ver Empréstimos do Dia</a>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Desenvolvido por D.S.Montenegro - EEMTI DRAGÃO DO MAR</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
