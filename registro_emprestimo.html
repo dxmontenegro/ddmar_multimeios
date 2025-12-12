@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -9,7 +8,7 @@
     <style>
         .form-container {
             width: 90%;
-            max-width: 800px;
+            max-width: 600px;
             margin: 50px auto;
             background-color: var(--cor-card);
             padding: 30px;
@@ -21,7 +20,7 @@
 <body>
     <header class="main-header">
         <div class="header-info">
-            <h1>Registro de Empréstimo</h1>
+            <h1>Registrar Novo Empréstimo</h1>
         </div>
         <button class="btn-secundario" onclick="window.location.href='painel_principal.html'">Voltar ao Painel</button>
     </header>
@@ -30,36 +29,36 @@
         
         <form id="registroEmprestimoForm">
             
-            <h2>Dados da Obra e do Aluno</h2>
-            
+            <h2>Informações da Obra</h2>
             <div class="input-group">
-                <label for="idObra">ID da Obra (Acervo):</label>
-                <input type="number" id="idObra" name="idObra" required min="1">
+                <label for="idObra">ID da Obra:</label>
+                <input type="number" id="idObra" name="idObra" placeholder="Digite o ID da obra (Ex: 1, 2, 3)" required>
             </div>
-
+            
             <div class="input-group">
                 <label for="tituloObra">Título da Obra (Preenchimento Automático):</label>
-                <input type="text" id="tituloObra" name="tituloObra" readonly style="background-color: #f0f0f0;">
-                <small>O título será carregado automaticamente após digitar o ID.</small>
+                <input type="text" id="tituloObra" name="tituloObra" readonly style="background-color: #eee;">
+            </div>
+
+            <hr style="margin: 20px 0;">
+
+            <h2>Informações do Mutuário (Aluno/Servidor)</h2>
+            <div class="input-group">
+                <label for="nomeMutuario">Nome Completo do Mutuário:</label>
+                <input type="text" id="nomeMutuario" name="nomeMutuario" required>
             </div>
             
             <div class="input-group">
-                <label for="idAluno">CPF/ID do Aluno (Emprestar para):</label>
-                <input type="text" id="idAluno" name="idAluno" required>
+                <label for="matricula">Matrícula/CPF (Identificação):</label>
+                <input type="text" id="matricula" name="matricula" required>
             </div>
 
             <div class="input-group">
-                <label for="nomeAluno">Nome do Aluno:</label>
-                <input type="text" id="nomeAluno" name="nomeAluno" required>
+                <label for="dataDevolucaoPrevista">Data de Devolução Prevista:</label>
+                <input type="date" id="dataDevolucaoPrevista" name="dataDevolucaoPrevista" required>
             </div>
             
-            <div class="input-group">
-                <label for="dataPrevistaDevolucao">Data Prevista de Devolução:</label>
-                <input type="date" id="dataPrevistaDevolucao" name="dataPrevistaDevolucao" required>
-                <small>Máximo 7 dias úteis de empréstimo.</small>
-            </div>
-            
-            <button type="submit" class="btn-principal">Confirmar Empréstimo</button>
+            <button type="submit" class="btn-principal">Registrar Empréstimo</button>
         </form>
         
         <p id="mensagemEmprestimo" class="mensagem-erro"></p>
