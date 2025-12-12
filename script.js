@@ -4,7 +4,7 @@
 
 // ******** INSERIR SEU URL DE APPS SCRIPT AQUI *********
 // Por favor, use o URL gerado na sua ÚLTIMA NOVA IMPLANTAÇÃO (DEPLOY)
-const URL_DO_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbyYC8PqHDtU7NkzUztIB9SptBCbA0lgbWnyscp4C2r1F4CW5Ny6MB35SZCTuhCblI4bgg/exec'; // <--- ATUALIZE ESTE URL
+const URL_DO_APPS_SCRIPT = 'COLE_AQUI_O_SEU_URL_DE_APPS_SCRIPT'; // <--- ATUALIZE ESTE URL
 // ******************************************************************
 
 // Variável global para armazenar os dados do Acervo para buscas rápidas
@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const usuario = document.getElementById('usuario').value;
             const senha = document.getElementById('senha').value;
             
+            // Mensagem inicial para feedback
             exibirMensagem('mensagemErro', 'Verificando credenciais...', '#007bff'); 
 
             const dadosParaEnviar = new URLSearchParams();
@@ -43,7 +44,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 method: 'POST',
                 body: dadosParaEnviar
             })
-            .then(response => response.json()) 
+            .then(response => {
+                // Se a resposta não for 200 OK (o que pode ser o caso se o Apps Script falhar)
+                if (!response.ok) {
+                    throw new Error(`Erro de rede/servidor: ${response.status} ${response.statusText}`);
+                }
+                return response.json(); 
+            }) 
             .then(data => {
                 if (data.status === 'sucesso') {
                     exibirMensagem('mensagemErro', `Bem-vindo(a), ${data.nome} (${data.nivel}). Redirecionando...`, 'green');
@@ -56,12 +63,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     }, 1500);
                     
                 } else {
-                    exibirMensagem('mensagemErro', data.mensagem, 'red');
+                    // Mensagem de falha de login (ex: Senha incorreta)
+                    exibirMensagem('mensagemErro', data.mensagem || 'Login falhou. Verifique usuário e senha.', 'red');
                 }
             })
             .catch(error => {
-                console.error('Erro de rede (falha na API):', error);
-                exibirMensagem('mensagemErro', 'Erro de conexão ou URL do Apps Script inválido.', 'red');
+                // Este erro é capturado quando há um problema de rede, URL inválido, ou Apps Script falhando.
+                console.error('Erro de conexão ou API:', error);
+                exibirMensagem('mensagemErro', 'Falha de conexão: Verifique seu Apps Script URL ou Deploy.', 'red');
             });
         });
 
