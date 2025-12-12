@@ -1,6 +1,6 @@
 
-// ******** SEU URL DE APPS SCRIPT INSERIDO AQUI *********
-const URL_DO_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbyYC8PqHDtU7NkzUztIB9SptBCbA0lgbWnyscp4C2r1F4CW5Ny6MB35SZCTuhCblI4bgg/exec'; 
+// Por favor, use o URL gerado na sua ÚLTIMA NOVA IMPLANTAÇÃO (DEPLOY)
+const URL_DO_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbwQunEQq4RLfKsCaG4ZVkYVtj57NPCs8nZ2mKAJxIgNlMSwp8JlBHB2xJRHgIbjs8g6Q/exec'; 
 // ******************************************************************
 
 // Função genérica para exibir mensagens na tela
@@ -58,7 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // CORREÇÃO DE NAVEGAÇÃO: Ação para o botão de Cadastro
         const cadastroBtn = document.getElementById('cadastroBtn');
         if (cadastroBtn) {
             cadastroBtn.addEventListener('click', () => {
@@ -69,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // -----------------------------------------------------------
-    // 2. LÓGICA DE CADASTRO (cadastro.html)
+    // 2. LÓGICA DE CADASTRO DE USUÁRIO (cadastro.html)
     // -----------------------------------------------------------
     const cadastroForm = document.getElementById('cadastroForm');
     if (cadastroForm) {
@@ -91,8 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
             dadosParaEnviar.append('acao', 'cadastro'); 
             dadosParaEnviar.append('usuario', usuario);
             dadosParaEnviar.append('senha', senha);
-            dadosParaEnviar.append('senhaConfirmacao', senhaConfirmacao);
-
+            
             fetch(URL_DO_APPS_SCRIPT, {
                 method: 'POST',
                 body: dadosParaEnviar
@@ -102,7 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (data.status === 'sucesso') {
                     exibirMensagem('mensagemCadastro', data.mensagem + ' Retornando ao Login...', 'green');
                     setTimeout(() => {
-                        // CORRIGIDO: Volta para a nova página inicial index.html
                         window.location.href = 'index.html'; 
                     }, 2000);
                 } else {
@@ -116,18 +113,58 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // -----------------------------------------------------------
+    // 3. LÓGICA DE CADASTRO DE ACERVO (cadastro_acervo.html)
+    // -----------------------------------------------------------
+    const cadastroAcervoForm = document.getElementById('cadastroAcervoForm');
+    if (cadastroAcervoForm) {
+        cadastroAcervoForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            exibirMensagem('mensagemAcervo', 'Enviando dados da obra...', '#007bff');
+
+            // Cria o objeto de dados usando FormData
+            const formData = new FormData(cadastroAcervoForm);
+            
+            // Adiciona a ação específica para o Apps Script
+            formData.append('acao', 'cadastroAcervo'); 
+
+            // Converte FormData para URLSearchParams para o Apps Script
+            const dadosParaEnviar = new URLSearchParams(formData);
+
+            fetch(URL_DO_APPS_SCRIPT, {
+                method: 'POST',
+                body: dadosParaEnviar
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'sucesso') {
+                    exibirMensagem('mensagemAcervo', data.mensagem, 'green');
+                    cadastroAcervoForm.reset(); // Limpa o formulário após o sucesso
+                } else {
+                    exibirMensagem('mensagemAcervo', data.mensagem, 'red');
+                }
+            })
+            .catch(error => {
+                console.error('Erro de rede no Acervo:', error);
+                exibirMensagem('mensagemAcervo', 'Erro de conexão. Verifique sua rede.', 'red');
+            });
+        });
+    }
+
 
     // -----------------------------------------------------------
-    // 3. LÓGICA DE PAINEL E LOGOUT
+    // 4. LÓGICA DE PAINEL E LOGOUT (painel_principal.html)
     // -----------------------------------------------------------
 
-    // Lógica para o painel_principal.html (futuro)
+    // Lógica para o painel_principal.html 
     if (document.body.classList.contains('painel-grid')) {
         const userName = localStorage.getItem('userName');
         const userNivel = localStorage.getItem('userNivel');
 
+        // Proteção de rota: Redireciona se não estiver logado
         if (!userName) {
-            window.location.href = 'index.html'; // Redireciona se não estiver logado
+            window.location.href = 'index.html'; 
             return;
         }
 
@@ -141,11 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         logoutBtn.addEventListener('click', () => {
             localStorage.removeItem('userName');
             localStorage.removeItem('userNivel');
-            // CORRIGIDO: Redireciona para a nova página inicial index.html
             window.location.href = 'index.html'; 
         });
     }
 });
-
-
-
