@@ -388,7 +388,3 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 }); // CHAVE FINAL CORRETA - FIM DO ARQUIVO
-
-
-
-
