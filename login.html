@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - EEMTI DRAGÃO DO MAR</title>
+    <link rel="stylesheet" href="styles.css"> 
+</head>
+<body>
+    <div class="login-container">
+        <header>
+            <img src="logo_dragao_do_mar.png" alt="Logo EEMTI Dragão do Mar" class="logo"> 
+            <h1>Sistema Multimeios</h1>
+        </header>
+
+        <form id="loginForm">
+            <div class="input-group">
+                <label for="usuario">Usuário:</label>
+                <input type="text" id="usuario" name="usuario" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" required>
+            </div>
+            
+            <button type="submit" class="btn-principal">Entrar</button>
+        </form>
+
+        <div class="actions">
+            <button id="cadastroBtn" class="btn-secundario">Cadastrar Nova Senha</button>
+            <p id="mensagemErro" class="mensagem-erro"></p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Desenvolvido por D.S.Montenegro - EEMTI DRAGÃO DO MAR</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

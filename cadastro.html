@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - EEMTI DRAGÃO DO MAR</title>
+    <link rel="stylesheet" href="styles.css"> 
+</head>
+<body>
+    <div class="login-container">
+        <header>
+            <img src="logo_dragao_do_mar.png" alt="Logo EEMTI Dragão do Mar" class="logo">
+            <h1>Cadastro de Usuário</h1>
+        </header>
+
+        <form id="cadastroForm">
+            <div class="input-group">
+                <label for="novoUsuario">Novo Usuário:</label>
+                <input type="text" id="novoUsuario" name="novoUsuario" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="novaSenha">Senha:</label>
+                <input type="password" id="novaSenha" name="novaSenha" required>
+            </div>
+
+            <div class="input-group">
+                <label for="confirmarSenha">Confirmar Senha:</label>
+                <input type="password" id="confirmarSenha" name="confirmarSenha" required>
+            </div>
+            
+            <button type="submit" class="btn-principal">Cadastrar</button>
+        </form>
+
+        <div class="actions">
+            <button class="btn-secundario" onclick="window.location.href='login.html'">Voltar para Login</button>
+            <p id="mensagemCadastro" class="mensagem-erro"></p>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Desenvolvido por D.S.Montenegro - EEMTI DRAGÃO DO MAR</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
