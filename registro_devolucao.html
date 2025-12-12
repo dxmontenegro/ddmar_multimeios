@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Devolução - EEMTI DRAGÃO DO MAR</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <style>
+        .form-container {
+            width: 90%;
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: var(--cor-card);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--sombra-elegante);
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-info">
+            <h1>Registrar Devolução de Obra</h1>
+        </div>
+        <button class="btn-secundario" onclick="window.location.href='painel_principal.html'">Voltar ao Painel</button>
+    </header>
+
+    <div class="form-container">
+        
+        <form id="registroDevolucaoForm">
+            
+            <h2>Informações para Devolução</h2>
+            
+            <div class="input-group">
+                <label for="idObraDevolucao">ID da Obra a ser devolvida:</label>
+                <input type="number" id="idObraDevolucao" name="idObraDevolucao" placeholder="Digite o ID da obra (Ex: 1, 2, 3)" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="matriculaDevolucao">Matrícula/CPF do Mutuário:</label>
+                <input type="text" id="matriculaDevolucao" name="matriculaDevolucao" placeholder="Identificação de quem está devolvendo" required>
+            </div>
+
+            <div class="input-group">
+                <label for="dataDevolucaoReal">Data Real da Devolução:</label>
+                <input type="date" id="dataDevolucaoReal" name="dataDevolucaoReal" required>
+            </div>
+            
+            <button type="submit" class="btn-principal">Confirmar Devolução</button>
+        </form>
+        
+        <p id="mensagemDevolucao" class="mensagem-erro"></p>
+    </div>
+    
+    <footer>
+        <p>Desenvolvido por D.S.Montenegro - EEMTI DRAGÃO DO MAR</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
