@@ -1,7 +1,7 @@
-// ******** INSERIR SEU URL DE APPS SCRIPT AQUI *********
+
 // Por favor, use o URL gerado na sua ÚLTIMA NOVA IMPLANTAÇÃO (DEPLOY)
 const URL_DO_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbyYC8PqHDtU7NkzUztIB9SptBCbA0lgbWnyscp4C2r1F4CW5Ny6MB35SZCTuhCblI4bgg/exec'; 
-// ******************************************************************
+
 
 // Função genérica para exibir mensagens na tela
 function exibirMensagem(elementoId, mensagem, cor) {
@@ -283,6 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
 
 
 
