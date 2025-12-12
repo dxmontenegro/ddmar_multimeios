@@ -1,7 +1,4 @@
-// ------------------------------------------------------------------
-// ARQUIVO: script.js (FINAL E COMPLETO)
-// Contém Login, Cadastro de Usuário, Painel, Cadastro de Acervo e Consulta de Acervo.
-// ------------------------------------------------------------------
+
 
 // ******** INSERIR SEU URL DE APPS SCRIPT AQUI *********
 // Por favor, use o URL gerado na sua ÚLTIMA NOVA IMPLANTAÇÃO (DEPLOY)
@@ -288,5 +285,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
 
 
