@@ -1,11 +1,6 @@
-// ------------------------------------------------------------------
-// ARQUIVO: script.js
-// SALVAR COMO: script.js
-// ------------------------------------------------------------------
 
-// ******** IMPORTANTE: SUBSTITUA ESTE URL PELO SEU URL REAL *********
-const URL_DO_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbwQunEQ4RLfKsCaG4ZVkYVtj57NPCs8nZ2mKAJxIgNlMSwp8JlBHB2xJRHgIbjs8g6Q/exec'; 
-// Use o URL do seu deploy!
+// ******** SEU URL DE APPS SCRIPT INSERIDO AQUI *********
+const URL_DO_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbwQunEQq4RLfKsCaG4ZVkYVtj57NPCs8nZ2mKAJxIgNlMSwp8JlBHB2xJRHgIbjs8g6Q/exec'; 
 // ******************************************************************
 
 // Função genérica para exibir mensagens na tela
@@ -20,7 +15,7 @@ function exibirMensagem(elementoId, mensagem, cor) {
 document.addEventListener('DOMContentLoaded', () => {
 
     // -----------------------------------------------------------
-    // 1. LÓGICA DE LOGIN (Usado no index.html)
+    // 1. LÓGICA DE LOGIN (index.html)
     // -----------------------------------------------------------
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
@@ -33,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
             exibirMensagem('mensagemErro', 'Verificando credenciais...', '#007bff'); 
 
             const dadosParaEnviar = new URLSearchParams();
-            dadosParaEnviar.append('acao', 'login'); // Define a ação para o Apps Script
+            dadosParaEnviar.append('acao', 'login'); 
             dadosParaEnviar.append('usuario', usuario);
             dadosParaEnviar.append('senha', senha);
 
@@ -50,7 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     localStorage.setItem('userName', data.nome);
                     
                     setTimeout(() => {
-                        window.location.href = 'painel_principal.html'; // REDIRECIONA APÓS SUCESSO
+                        window.location.href = 'painel_principal.html'; 
                     }, 1500);
                     
                 } else {
@@ -63,11 +58,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
 
-        // Ação para o botão de Cadastro na tela de login
+        // CORREÇÃO DE NAVEGAÇÃO: Ação para o botão de Cadastro
         const cadastroBtn = document.getElementById('cadastroBtn');
         if (cadastroBtn) {
             cadastroBtn.addEventListener('click', () => {
-                // CORRIGIDO: Redireciona para o arquivo de cadastro
                 window.location.href = 'cadastro.html'; 
             });
         }
@@ -75,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // -----------------------------------------------------------
-    // 2. LÓGICA DE CADASTRO (Usado no cadastro.html)
+    // 2. LÓGICA DE CADASTRO (cadastro.html)
     // -----------------------------------------------------------
     const cadastroForm = document.getElementById('cadastroForm');
     if (cadastroForm) {
@@ -124,10 +118,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // -----------------------------------------------------------
-    // 3. LÓGICA DE PAINEL PRINCIPAL E LOGOUT (Para futura página painel_principal.html)
+    // 3. LÓGICA DE PAINEL E LOGOUT
     // -----------------------------------------------------------
 
-    // Verifica se estamos na página do painel principal
+    // Lógica para o painel_principal.html (futuro)
     if (document.body.classList.contains('painel-grid')) {
         const userName = localStorage.getItem('userName');
         const userNivel = localStorage.getItem('userNivel');
@@ -141,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('userNivelDisplay').textContent = userNivel;
     }
     
-    // Configuração do botão de Logout 
+    // Configuração do botão de Logout
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', () => {
