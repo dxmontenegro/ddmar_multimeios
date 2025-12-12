@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Empréstimo - EEMTI DRAGÃO DO MAR</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <style>
+        .form-container {
+            width: 90%;
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: var(--cor-card);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--sombra-elegante);
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-info">
+            <h1>Registro de Empréstimo</h1>
+        </div>
+        <button class="btn-secundario" onclick="window.location.href='painel_principal.html'">Voltar ao Painel</button>
+    </header>
+
+    <div class="form-container">
+        
+        <form id="registroEmprestimoForm">
+            
+            <h2>Dados da Obra e do Aluno</h2>
+            
+            <div class="input-group">
+                <label for="idObra">ID da Obra (Acervo):</label>
+                <input type="number" id="idObra" name="idObra" required min="1">
+            </div>
+
+            <div class="input-group">
+                <label for="tituloObra">Título da Obra (Preenchimento Automático):</label>
+                <input type="text" id="tituloObra" name="tituloObra" readonly style="background-color: #f0f0f0;">
+                <small>O título será carregado automaticamente após digitar o ID.</small>
+            </div>
+            
+            <div class="input-group">
+                <label for="idAluno">CPF/ID do Aluno (Emprestar para):</label>
+                <input type="text" id="idAluno" name="idAluno" required>
+            </div>
+
+            <div class="input-group">
+                <label for="nomeAluno">Nome do Aluno:</label>
+                <input type="text" id="nomeAluno" name="nomeAluno" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="dataPrevistaDevolucao">Data Prevista de Devolução:</label>
+                <input type="date" id="dataPrevistaDevolucao" name="dataPrevistaDevolucao" required>
+                <small>Máximo 7 dias úteis de empréstimo.</small>
+            </div>
+            
+            <button type="submit" class="btn-principal">Confirmar Empréstimo</button>
+        </form>
+        
+        <p id="mensagemEmprestimo" class="mensagem-erro"></p>
+    </div>
+    
+    <footer>
+        <p>Desenvolvido por D.S.Montenegro - EEMTI DRAGÃO DO MAR</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
