@@ -1,33 +1,55 @@
-// -----------------------------------------------------------
-// 3. LÓGICA DE PAINEL PRINCIPAL E LOGOUT
-// -----------------------------------------------------------
+// ------------------------------------------------------------------
+// ARQUIVO: script.js
+// LOCALIZAR E CORRIGIR OS TRECHOS ABAIXO:
+// ------------------------------------------------------------------
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Verifica se estamos na página do painel principal
-    if (document.body.classList.contains('painel-grid')) {
-        const userName = localStorage.getItem('userName');
-        const userNivel = localStorage.getItem('userNivel');
-
-        // Se não houver nome de usuário, redireciona para o login por segurança
-        if (!userName) {
-            window.location.href = 'login.html';
-            return;
-        }
-
-        // Exibe as informações do usuário
-        document.getElementById('userNameDisplay').textContent = userName;
-        document.getElementById('userNivelDisplay').textContent = userNivel;
-    }
+    // ... (restante da lógica de login) ...
     
-    // Configuração do botão de Logout (presente no painel_principal.html)
+    // Ação para o botão de Cadastro na tela de login
+    const cadastroBtn = document.getElementById('cadastroBtn');
+    if (cadastroBtn) {
+        cadastroBtn.addEventListener('click', () => {
+            // CORRIGIDO: Redireciona para o cadastro.html
+            window.location.href = 'cadastro.html'; 
+        });
+    }
+
+    // ... (o restante do bloco document.addEventListener do login) ...
+});
+
+
+// ... (a lógica de Cadastro) ...
+
+const cadastroForm = document.getElementById('cadastroForm');
+if (cadastroForm) {
+    // ... (restante da lógica de cadastro) ...
+
+    .then(data => {
+        if (data.status === 'sucesso') {
+            exibirMensagem('mensagemCadastro', data.mensagem + ' Retornando ao Login...', 'green');
+            setTimeout(() => {
+                // CORRIGIDO: Volta para a nova página inicial index.html
+                window.location.href = 'index.html'; 
+            }, 2000);
+        } else {
+            // ...
+        }
+    })
+    // ...
+}
+
+
+// ... (a lógica de Painel e Logout, no final do arquivo) ...
+
+    // Configuração do botão de Logout
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', () => {
-            // Limpa as credenciais salvas
             localStorage.removeItem('userName');
             localStorage.removeItem('userNivel');
-            // Redireciona para a página de login
-            window.location.href = 'login.html';
+            // CORRIGIDO: Redireciona para a nova página inicial index.html
+            window.location.href = 'index.html'; 
         });
     }
 });
