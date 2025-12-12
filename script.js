@@ -1,9 +1,7 @@
-
+// ******** INSERIR SEU URL DE APPS SCRIPT AQUI *********
+// Por favor, use o URL gerado na sua ÚLTIMA NOVA IMPLANTAÇÃO (DEPLOY)
 const URL_DO_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbyYC8PqHDtU7NkzUztIB9SptBCbA0lgbWnyscp4C2r1F4CW5Ny6MB35SZCTuhCblI4bgg/exec'; 
 // ******************************************************************
-
-// Variável global para armazenar os dados do Acervo para buscas rápidas
-let acervoDataParaBusca = []; 
 
 // Função genérica para exibir mensagens na tela
 function exibirMensagem(elementoId, mensagem, cor) {
@@ -15,8 +13,6 @@ function exibirMensagem(elementoId, mensagem, cor) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-
-    // --- BLOCOS EXISTENTES (1, 2, 3) ---
 
     // -----------------------------------------------------------
     // 1. LÓGICA DE LOGIN (index.html)
@@ -152,32 +148,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- FUNÇÕES REUSÁVEIS ---
-    
-    // Função para buscar o acervo (reutilizada para Consulta e Empréstimo)
-    async function fetchAcervoData() {
-        const URL_CONSULTA = `${URL_DO_APPS_SCRIPT}?acao=consultaAcervo`;
-        try {
-            const response = await fetch(URL_CONSULTA);
-            const data = await response.json();
-            if (data.status === 'sucesso' && data.dados) {
-                return data.dados;
-            }
-            return [];
-        } catch (error) {
-            console.error('Erro ao buscar dados do Acervo:', error);
-            return [];
-        }
-    }
-
-
     // -----------------------------------------------------------
     // 4. LÓGICA DE CONSULTA DE ACERVO (consulta_acervo.html)
     // -----------------------------------------------------------
     const consultaAcervoPage = document.getElementById('tabelaAcervo');
     if (consultaAcervoPage) {
         
-        // Elementos da página
+        const URL_APPS_SCRIPT_CONSULTA = `${URL_DO_APPS_SCRIPT}?acao=consultaAcervo`; // Usando GET
         const tabela = document.getElementById('tabelaAcervo');
         const tbody = tabela.querySelector('tbody');
         const theadRow = tabela.querySelector('thead tr');
@@ -185,19 +162,31 @@ document.addEventListener('DOMContentLoaded', () => {
         const campoBusca = document.getElementById('campoBusca');
         const contadorRegistros = document.getElementById('contadorRegistros');
 
-        async function carregarAcervo() {
+        let dadosAcervo = []; // Armazena todos os dados para a busca
+
+        function carregarAcervo() {
             mensagemConsulta.textContent = 'Carregando dados...';
             mensagemConsulta.style.display = 'block';
             
-            acervoDataParaBusca = await fetchAcervoData(); // Carrega os dados globalmente
-
-            if (acervoDataParaBusca.length > 0) {
-                renderizarTabela(acervoDataParaBusca);
-            } else {
-                mensagemConsulta.textContent = 'Nenhum registro encontrado no Acervo.';
+            fetch(URL_APPS_SCRIPT_CONSULTA)
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'sucesso' && data.dados) {
+                    dadosAcervo = data.dados;
+                    renderizarTabela(dadosAcervo);
+                    mensagemConsulta.style.display = 'none';
+                } else {
+                    mensagemConsulta.textContent = data.mensagem || 'Erro ao carregar dados do Acervo.';
+                    mensagemConsulta.style.display = 'block';
+                    tbody.innerHTML = '';
+                }
+            })
+            .catch(error => {
+                console.error('Erro de rede na consulta:', error);
+                mensagemConsulta.textContent = 'Erro de conexão ou URL Apps Script inválido.';
                 mensagemConsulta.style.display = 'block';
                 tbody.innerHTML = '';
-            }
+            });
         }
 
         function renderizarTabela(dados) {
@@ -224,11 +213,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 const tr = document.createElement('tr');
                 cabecalhos.forEach(chave => {
                     const td = document.createElement('td');
-                    let valor = item[chave];
                     
-                    // Formatação de datas
-                    if (valor && (typeof valor === 'string' && !isNaN(Date.parse(valor))) || valor instanceof Date) {
+                    // Formatação para datas
+                    let valor = item[chave];
+                    if (valor && typeof valor === 'string' && !isNaN(Date.parse(valor))) {
+                       // Tenta formatar string de data
                        td.textContent = new Date(valor).toLocaleDateString('pt-BR');
+                    } else if (item[chave] instanceof Date) {
+                        td.textContent = item[chave].toLocaleDateString('pt-BR');
                     } else {
                         td.textContent = valor;
                     }
@@ -246,7 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
         campoBusca.addEventListener('keyup', () => {
             const termo = campoBusca.value.toUpperCase();
             
-            const resultadosFiltrados = acervoDataParaBusca.filter(item => {
+            const resultadosFiltrados = dadosAcervo.filter(item => {
                 return Object.values(item).some(valor => {
                     return String(valor).toUpperCase().includes(termo);
                 });
@@ -261,97 +253,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // -----------------------------------------------------------
-    // 5. LÓGICA DE REGISTRO DE EMPRÉSTIMO (registro_emprestimo.html)
-    // -----------------------------------------------------------
-    const registroEmprestimoForm = document.getElementById('registroEmprestimoForm');
-    if (registroEmprestimoForm) {
-        
-        const idObraInput = document.getElementById('idObra');
-        const tituloObraInput = document.getElementById('tituloObra');
-        const mensagemEmprestimo = document.getElementById('mensagemEmprestimo');
-
-        // Carrega o acervo em segundo plano para preenchimento automático
-        fetchAcervoData().then(data => {
-            acervoDataParaBusca = data;
-            console.log('Dados do Acervo carregados para consulta rápida.');
-        });
-
-
-        // Função para preencher o título ao digitar o ID
-        idObraInput.addEventListener('input', () => {
-            const idDigitado = idObraInput.value.trim();
-            tituloObraInput.value = ''; // Limpa o campo
-
-            if (idDigitado === '' || acervoDataParaBusca.length === 0) {
-                exibirMensagem('mensagemEmprestimo', '', 'black');
-                return;
-            }
-
-            // Procura a obra no array carregado
-            const obraEncontrada = acervoDataParaBusca.find(obra => 
-                obra.ID && obra.ID.toString() === idDigitado
-            );
-
-            if (obraEncontrada) {
-                // Coluna H na planilha é o Status (índice 7 no acervoData, mas o objeto usa o nome da coluna)
-                if (obraEncontrada.Status && obraEncontrada.Status.toUpperCase() === 'DISPONÍVEL') {
-                    tituloObraInput.value = obraEncontrada['Título'] || 'Título Não Encontrado';
-                    exibirMensagem('mensagemEmprestimo', 'Obra encontrada. Status: DISPONÍVEL.', 'green');
-                } else {
-                    tituloObraInput.value = obraEncontrada['Título'] || '';
-                    exibirMensagem('mensagemEmprestimo', `Obra INDISPONÍVEL. Status atual: ${obraEncontrada.Status || 'N/A'}`, 'red');
-                }
-            } else {
-                exibirMensagem('mensagemEmprestimo', 'ID de Obra não encontrado.', 'red');
-            }
-        });
-
-
-        // Lógica de envio do formulário de empréstimo
-        registroEmprestimoForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            // Revalidação rápida antes de enviar
-            if (tituloObraInput.value === '' || (idObraInput.value.trim() !== '' && !acervoDataParaBusca.find(obra => obra.ID.toString() === idObraInput.value.trim() && obra.Status.toUpperCase() === 'DISPONÍVEL'))) {
-                 exibirMensagem('mensagemEmprestimo', 'Por favor, insira um ID de Obra válido e disponível.', 'red');
-                 return;
-            }
-
-            exibirMensagem('mensagemEmprestimo', 'Registrando empréstimo...', '#007bff');
-
-            const formData = new FormData(registroEmprestimoForm);
-            formData.append('acao', 'registrarEmprestimo'); 
-            
-            // Adiciona o Título da Obra (que foi preenchido) para redundância no Apps Script
-            formData.append('tituloObra', tituloObraInput.value); 
-
-            const dadosParaEnviar = new URLSearchParams(formData);
-
-            fetch(URL_DO_APPS_SCRIPT, {
-                method: 'POST',
-                body: dadosParaEnviar
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'sucesso') {
-                    exibirMensagem('mensagemEmprestimo', data.mensagem, 'green');
-                    registroEmprestimoForm.reset(); 
-                    // Recarrega o acervo para atualizar o status do livro no array local
-                    fetchAcervoData().then(data => acervoDataParaBusca = data); 
-                } else {
-                    exibirMensagem('mensagemEmprestimo', data.mensagem, 'red');
-                }
-            })
-            .catch(error => {
-                console.error('Erro de rede no Empréstimo:', error);
-                exibirMensagem('mensagemEmprestimo', 'Erro de conexão. Verifique sua rede.', 'red');
-            });
-        });
-    }
-
-
-    // -----------------------------------------------------------
-    // 6. LÓGICA DE PAINEL E LOGOUT (painel_principal.html)
+    // 5. LÓGICA DE PAINEL E LOGOUT (painel_principal.html)
     // -----------------------------------------------------------
 
     if (document.body.classList.contains('painel-grid')) {
@@ -363,6 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // Verifica se os elementos existem antes de tentar definir o textContent
         const nameDisplay = document.getElementById('userNameDisplay');
         const nivelDisplay = document.getElementById('userNivelDisplay');
         
@@ -380,7 +283,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
-
 
 
 
