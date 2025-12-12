@@ -1,6 +1,11 @@
+// ------------------------------------------------------------------
+// ARQUIVO: script.js (FINAL E COMPLETO)
+// Contém Login, Cadastro de Usuário, Painel, Cadastro de Acervo e Consulta de Acervo.
+// ------------------------------------------------------------------
 
+// ******** INSERIR SEU URL DE APPS SCRIPT AQUI *********
 // Por favor, use o URL gerado na sua ÚLTIMA NOVA IMPLANTAÇÃO (DEPLOY)
-const URL_DO_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbyYC8PqHDtU7NkzUztIB9SptBCbA0lgbWnyscp4C2r1F4CW5Ny6MB35SZCTuhCblI4bgg/exec'; 
+const URL_DO_APPS_SCRIPT = 'INSIRA_AQUI_O_SEU_URL_DE_APPS_SCRIPT_FINAL'; 
 // ******************************************************************
 
 // Função genérica para exibir mensagens na tela
@@ -123,13 +128,9 @@ document.addEventListener('DOMContentLoaded', () => {
             
             exibirMensagem('mensagemAcervo', 'Enviando dados da obra...', '#007bff');
 
-            // Cria o objeto de dados usando FormData
             const formData = new FormData(cadastroAcervoForm);
-            
-            // Adiciona a ação específica para o Apps Script
             formData.append('acao', 'cadastroAcervo'); 
 
-            // Converte FormData para URLSearchParams para o Apps Script
             const dadosParaEnviar = new URLSearchParams(formData);
 
             fetch(URL_DO_APPS_SCRIPT, {
@@ -140,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(data => {
                 if (data.status === 'sucesso') {
                     exibirMensagem('mensagemAcervo', data.mensagem, 'green');
-                    cadastroAcervoForm.reset(); // Limpa o formulário após o sucesso
+                    cadastroAcervoForm.reset(); 
                 } else {
                     exibirMensagem('mensagemAcervo', data.mensagem, 'red');
                 }
@@ -152,24 +153,129 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // -----------------------------------------------------------
+    // 4. LÓGICA DE CONSULTA DE ACERVO (consulta_acervo.html)
+    // -----------------------------------------------------------
+    const consultaAcervoPage = document.getElementById('tabelaAcervo');
+    if (consultaAcervoPage) {
+        
+        const URL_APPS_SCRIPT_CONSULTA = `${URL_DO_APPS_SCRIPT}?acao=consultaAcervo`; // Usando GET
+        const tabela = document.getElementById('tabelaAcervo');
+        const tbody = tabela.querySelector('tbody');
+        const theadRow = tabela.querySelector('thead tr');
+        const mensagemConsulta = document.getElementById('mensagemConsulta');
+        const campoBusca = document.getElementById('campoBusca');
+        const contadorRegistros = document.getElementById('contadorRegistros');
+
+        let dadosAcervo = []; // Armazena todos os dados para a busca
+
+        function carregarAcervo() {
+            mensagemConsulta.textContent = 'Carregando dados...';
+            mensagemConsulta.style.display = 'block';
+            
+            fetch(URL_APPS_SCRIPT_CONSULTA)
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'sucesso' && data.dados) {
+                    dadosAcervo = data.dados;
+                    renderizarTabela(dadosAcervo);
+                    mensagemConsulta.style.display = 'none';
+                } else {
+                    mensagemConsulta.textContent = data.mensagem || 'Erro ao carregar dados do Acervo.';
+                    mensagemConsulta.style.display = 'block';
+                    tbody.innerHTML = '';
+                }
+            })
+            .catch(error => {
+                console.error('Erro de rede na consulta:', error);
+                mensagemConsulta.textContent = 'Erro de conexão ou URL Apps Script inválido.';
+                mensagemConsulta.style.display = 'block';
+                tbody.innerHTML = '';
+            });
+        }
+
+        function renderizarTabela(dados) {
+            tbody.innerHTML = '';
+            theadRow.innerHTML = '';
+
+            if (dados.length === 0) {
+                mensagemConsulta.textContent = 'Nenhum registro encontrado no Acervo.';
+                mensagemConsulta.style.display = 'block';
+                contadorRegistros.textContent = 'Total: 0';
+                return;
+            }
+
+            // 1. Criar Cabeçalhos
+            const cabecalhos = Object.keys(dados[0]);
+            cabecalhos.forEach(chave => {
+                const th = document.createElement('th');
+                th.textContent = chave;
+                theadRow.appendChild(th);
+            });
+
+            // 2. Popular o Corpo da Tabela
+            dados.forEach(item => {
+                const tr = document.createElement('tr');
+                cabecalhos.forEach(chave => {
+                    const td = document.createElement('td');
+                    
+                    // Formatação para datas
+                    let valor = item[chave];
+                    if (valor && typeof valor === 'string' && !isNaN(Date.parse(valor))) {
+                       // Tenta formatar string de data
+                       td.textContent = new Date(valor).toLocaleDateString('pt-BR');
+                    } else if (item[chave] instanceof Date) {
+                        td.textContent = item[chave].toLocaleDateString('pt-BR');
+                    } else {
+                        td.textContent = valor;
+                    }
+
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            
+            contadorRegistros.textContent = `Total: ${dados.length}`;
+            mensagemConsulta.style.display = 'none';
+        }
+
+        // 3. Lógica de Busca (Filtro)
+        campoBusca.addEventListener('keyup', () => {
+            const termo = campoBusca.value.toUpperCase();
+            
+            const resultadosFiltrados = dadosAcervo.filter(item => {
+                return Object.values(item).some(valor => {
+                    return String(valor).toUpperCase().includes(termo);
+                });
+            });
+            
+            renderizarTabela(resultadosFiltrados);
+        });
+
+        // Carrega os dados quando a página for carregada
+        carregarAcervo();
+    }
+
 
     // -----------------------------------------------------------
-    // 4. LÓGICA DE PAINEL E LOGOUT (painel_principal.html)
+    // 5. LÓGICA DE PAINEL E LOGOUT (painel_principal.html)
     // -----------------------------------------------------------
 
-    // Lógica para o painel_principal.html 
     if (document.body.classList.contains('painel-grid')) {
         const userName = localStorage.getItem('userName');
         const userNivel = localStorage.getItem('userNivel');
 
-        // Proteção de rota: Redireciona se não estiver logado
         if (!userName) {
             window.location.href = 'index.html'; 
             return;
         }
 
-        document.getElementById('userNameDisplay').textContent = userName;
-        document.getElementById('userNivelDisplay').textContent = userNivel;
+        // Verifica se os elementos existem antes de tentar definir o textContent
+        const nameDisplay = document.getElementById('userNameDisplay');
+        const nivelDisplay = document.getElementById('userNivelDisplay');
+        
+        if (nameDisplay) nameDisplay.textContent = userName;
+        if (nivelDisplay) nivelDisplay.textContent = userNivel;
     }
     
     // Configuração do botão de Logout
@@ -182,4 +288,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
 
