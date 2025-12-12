@@ -1,6 +1,6 @@
 
 // ******** SEU URL DE APPS SCRIPT INSERIDO AQUI *********
-const URL_DO_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbwQunEQq4RLfKsCaG4ZVkYVtj57NPCs8nZ2mKAJxIgNlMSwp8JlBHB2xJRHgIbjs8g6Q/exec'; 
+const URL_DO_APPS_SCRIPT = 'https://script.google.com/macros/s/AKfycbwQunEQq4RLfKsCaG4ZVkYVtj57NPCs8nZ2mKAJxIgNlMSwp8JlBHfB2xJRHgIbjs8g6Q/exec'; 
 // ******************************************************************
 
 // Função genérica para exibir mensagens na tela
@@ -146,3 +146,4 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
