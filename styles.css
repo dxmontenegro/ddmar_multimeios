@@ -1,13 +1,11 @@
 
 :root {
-    /* Cores que você pode adaptar à identidade visual da EEMTI DRAGÃO DO MAR */
-    --cor-principal: #007bff; /* Azul forte, use a cor principal da escola */
-    --cor-secundaria: #0056b3; /* Azul mais escuro */
-    --cor-fundo: #f4f7f6; /* Fundo claro e moderno */
-    --cor-card: #ffffff; /* Fundo branco para o container */
+    /* Cores personalizadas para a escola EEMTI DRAGÃO DO MAR */
+    --cor-principal: #007bff; 
+    --cor-secundaria: #0056b3; 
+    --cor-fundo: #f4f7f6; 
+    --cor-card: #ffffff; 
     --sombra-elegante: 0 4px 12px rgba(0, 0, 0, 0.1);
-    --cor-sucesso: green;
-    --cor-erro: red;
 }
 
 body {
@@ -27,7 +25,7 @@ body {
     border-radius: 10px;
     box-shadow: var(--sombra-elegante);
     width: 100%;
-    max-width: 400px; /* Limita a largura para foco */
+    max-width: 400px; 
     text-align: center;
 }
 
@@ -71,7 +69,7 @@ h1 {
     font-size: 1em;
     margin-top: 10px;
     transition: background-color 0.3s ease;
-    text-decoration: none; /* Garante que links/botões tenham estilo consistente */
+    text-decoration: none; 
     display: block;
     text-align: center;
 }
@@ -101,13 +99,12 @@ h1 {
 }
 
 .mensagem-erro {
-    color: var(--cor-erro);
+    color: red;
     margin-top: 15px;
     font-weight: bold;
     font-size: 0.9em;
 }
 
-/* Rodapé com a assinatura */
 footer {
     margin-top: 20px;
     padding: 10px;
@@ -115,9 +112,8 @@ footer {
     font-size: 0.8em;
 }
 
-/* ----------------------------------------------------------- */
-/* REGRAS PARA PAINEL PRINCIPAL (caso você queira ver completo) */
-/* ----------------------------------------------------------- */
+/* --- ESTILOS DO PAINEL PRINCIPAL (Necessário para o futuro) --- */
+
 .main-header {
     background-color: var(--cor-card);
     box-shadow: var(--sombra-elegante);
@@ -173,11 +169,6 @@ footer {
     margin-bottom: 15px;
 }
 
-.card p {
-    color: #555;
-    margin-bottom: 25px;
-}
-
 .btn-pequeno {
     margin-top: 10px;
     display: block;
@@ -189,8 +180,4 @@ footer {
     text-decoration: none;
     padding: 8px;
     font-weight: normal;
-}
-
-.btn-pequeno:hover {
-    background-color: #e0e0e0;
 }
