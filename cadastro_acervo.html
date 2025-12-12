@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Acervo - EEMTI DRAGÃO DO MAR</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <style>
+        .form-container {
+            width: 90%;
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: var(--cor-card);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--sombra-elegante);
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="header-info">
+            <h1>Cadastro de Nova Obra (Acervo)</h1>
+        </div>
+        <button class="btn-secundario" onclick="window.location.href='painel_principal.html'">Voltar ao Painel</button>
+    </header>
+
+    <div class="form-container">
+        
+        <form id="cadastroAcervoForm">
+            
+            <div class="input-group">
+                <label for="titulo">Título da Obra:</label>
+                <input type="text" id="titulo" name="titulo" required>
+            </div>
+
+            <div class="input-group">
+                <label for="autor">Autor(es):</label>
+                <input type="text" id="autor" name="autor" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="tipoObra">Tipo de Obra:</label>
+                <select id="tipoObra" name="tipoObra" required>
+                    <option value="">Selecione o Tipo</option>
+                    <option value="Livro Didático">Livro Didático</option>
+                    <option value="Literatura">Literatura</option>
+                    <option value="Referência">Referência (Enciclopédia, Dicionário)</option>
+                    <option value="Outro Material">Outro Material (Revista, CD, etc)</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label for="estante">Estante (Setor):</label>
+                <input type="text" id="estante" name="estante" placeholder="Ex: A1, B2, Infantil" required>
+            </div>
+
+            <div class="input-group">
+                <label for="prateleira">Prateleira:</label>
+                <input type="text" id="prateleira" name="prateleira" placeholder="Ex: 1, 2, Superior" required>
+            </div>
+            
+            <div class="input-group">
+                <label for="descricao">Observações/Descrição:</label>
+                <textarea id="descricao" name="descricao" rows="3"></textarea>
+            </div>
+            
+            <button type="submit" class="btn-principal">Registrar Obra</button>
+        </form>
+        
+        <p id="mensagemAcervo" class="mensagem-erro"></p>
+    </div>
+    
+    <footer>
+        <p>Desenvolvido por D.S.Montenegro - EEMTI DRAGÃO DO MAR</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
